@@ -119,20 +119,28 @@ export default {
         );
 
       const response =
-        await fetch(bloggerRequest);
+  await fetch(bloggerRequest);
 
-      /* =====================================
-         PROFESSIONAL CUSTOM 404
-         ===================================== */
+const pageText =
+  await response.clone().text();
 
-      if (response.status === 404) {
-        return Response.redirect(
-          "https://qrc.imdaderohani.in/404",
-          302
-        );
-      }
+const bloggerNotFound =
+  response.status === 404 ||
+  pageText.includes(
+    "जिस पेज को आप खोज रहे हैं वह मौजूद नहीं है"
+  ) ||
+  pageText.includes(
+    "the page you were looking for in this blog does not exist"
+  );
 
-      return response;
+if (bloggerNotFound) {
+  return Response.redirect(
+    "https://qrc.imdaderohani.in/404",
+    302
+  );
+}
+
+return response;
     }
 
 
