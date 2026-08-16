@@ -1994,23 +1994,6 @@ if (path === "/rohani-rehnumai") {
   );
 }
     
-/* =========================================
-   ROHANI REHNUMAI DIRECTORY
-   ========================================= */
-
-if (path === "/rohani-rehnumai") {
-  return new Response(
-    rohaniRehnumaiHtml(),
-    {
-      status: 200,
-      headers: {
-        "Content-Type": "text/html; charset=UTF-8",
-        "Cache-Control": "no-store"
-      }
-    }
-  );
-}
-    
         /* =========================================
        BLOCK INVALID BLOGGER .htm URLS
        ========================================= */
