@@ -59,6 +59,26 @@ body{
   overflow-x:hidden;
 }
 
+/* =========================================
+   404 PAGE CONTENT PROTECTION
+   ========================================= */
+
+body,
+body *{
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+}
+
+img{
+  -webkit-user-drag:none;
+  user-drag:none;
+}
+
+a,
+button{
+  -webkit-touch-callout:none;
+}
 
 /* =========================
    MAIN PAGE
