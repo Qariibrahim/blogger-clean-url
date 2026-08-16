@@ -2062,14 +2062,14 @@ async function refreshRohaniPages(){
           ){
             return;
           }
-
-
-          .replace(
-  /\\/+$/,
-  ""
-);
-
-
+          
+        const originalPath =
+  pageUrl.pathname
+    .replace(
+      /\\/+$/,
+      ""
+    );
+    
           const pageKey =
             originalPath
               .replace(
