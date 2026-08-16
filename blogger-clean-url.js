@@ -974,10 +974,11 @@ body{
   <div class="brand">
 
     <img
-      class="brand-logo"
-      src="/pwa-icon-192.png"
-      alt="Imdade Rohani"
-    >
+  class="brand-logo"
+  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtiQV1W9mQro6EmrwV6aJM5Rtve5MGvQsXCHuP5XlDi-6QSE5eo6INg28uODihhNdpMpOjke5vEkn2NPf6AuRzBAZSQvQxcYk_jgK0f7zpMBrKzCe-Bn-h5Dsjrwpua0xIPqDchRn8RAAJgMLroEFLbASS_WRgiR0NhF0TvPHMpFL9UGIGZeyltyZa3krn/s320/41040.png"
+  alt="Imdade Rohani"
+  draggable="false"
+>
 
     <div class="brand-text">
 
