@@ -2042,7 +2042,6 @@ async function refreshRohaniPages(){
               window.location.origin
             );
 
-
           if(
             pageUrl.hostname !==
             window.location.hostname
@@ -2062,30 +2061,6 @@ async function refreshRohaniPages(){
           ){
             return;
           }
-          
-        const originalPath =
-  const originalPath =
-  pageUrl.pathname
-    .replace(
-      /\\/+$/,
-      ""
-    );
-    
-          const pageKey =
-            originalPath
-              .replace(
-                /^\/p\//,
-                ""
-              )
-              .replace(
-  /^\\/p\\//,
-  ""
-)
-              .replace(
-                /\.html?$/i,
-                ""
-              );
-
 
           const cleanPath =
             cleanNameMap[pageKey]
