@@ -22,7 +22,7 @@ async function checkBloggerResponse(response, request) {
 
   // Asli HTTP error
   if (response.status === 404 || response.status === 410) {
-    return Response.redirect(CUSTOM_404, 302);
+    return serveCustom404();
   }
 
   if (request.method === "HEAD") {
@@ -118,7 +118,7 @@ async function checkBloggerResponse(response, request) {
     english404 ||
     bloggerErrorStructure
   ) {
-    return Response.redirect(CUSTOM_404, 302);
+    return serveCustom404();
   }
 
   return response;
