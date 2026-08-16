@@ -1237,6 +1237,630 @@ button{
 </html>`;
 }
 
+function rohaniRehnumaiHtml() {
+  return `<!doctype html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<meta name="theme-color" content="#00143d">
+
+<title>روحانی رہنمائی | Imdade Rohani</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      #0b3470 0,
+      #031c4a 32%,
+      #001431 66%,
+      #000b1e 100%
+    );
+
+  color:#fff;
+
+  font-family:
+    Arial,
+    "Noto Nastaliq Urdu",
+    sans-serif;
+
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+}
+
+.page{
+  width:100%;
+  min-height:100vh;
+  padding:14px 12px 35px;
+}
+
+.header{
+  max-width:900px;
+  margin:0 auto 25px;
+  padding:12px 14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+
+  direction:ltr;
+
+  border:
+    1px solid rgba(235,174,48,.30);
+
+  border-radius:18px;
+
+  background:
+    rgba(0,20,55,.78);
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.25);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.logo{
+  width:58px;
+  height:58px;
+  min-width:58px;
+
+  padding:7px;
+  object-fit:contain;
+
+  border-radius:50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffe49a,
+      #d99a18
+    );
+
+  border:2px solid #e7ae31;
+
+  -webkit-user-drag:none;
+}
+
+.brand-text{
+  direction:ltr;
+  text-align:left;
+}
+
+.brand-name{
+  display:block;
+  font-size:22px;
+  font-weight:700;
+}
+
+.brand-sub{
+  display:block;
+  margin-top:4px;
+  color:#efb83d;
+  font-size:11px;
+}
+
+.home-btn{
+  padding:10px 13px;
+
+  color:#fff;
+  text-decoration:none;
+
+  border:
+    1px solid rgba(239,179,57,.34);
+
+  border-radius:12px;
+
+  background:
+    rgba(9,47,91,.85);
+}
+
+.hero{
+  max-width:850px;
+  margin:auto;
+  text-align:center;
+}
+
+.hero-icon{
+  width:82px;
+  height:82px;
+
+  margin:5px auto 10px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  color:#fff;
+  font-size:42px;
+
+  background:
+    linear-gradient(
+      #dca52f,
+      #8f5a08
+    );
+
+  box-shadow:
+    0 0 28px rgba(222,166,48,.28);
+}
+
+h1{
+  margin:5px 0;
+
+  color:#efb13a;
+
+  font-size:
+    clamp(
+      30px,
+      8vw,
+      46px
+    );
+
+  line-height:1.8;
+}
+
+.intro{
+  max-width:680px;
+  margin:0 auto 25px;
+
+  color:#dce7f5;
+
+  font-size:
+    clamp(
+      15px,
+      4vw,
+      19px
+    );
+
+  line-height:2.1;
+}
+
+.directory{
+  width:100%;
+  max-width:850px;
+  margin:auto;
+
+  padding:18px;
+
+  border:
+    1px solid rgba(235,174,48,.26);
+
+  border-radius:20px;
+
+  background:
+    rgba(3,28,65,.80);
+}
+
+.directory-title{
+  margin:0 0 16px;
+
+  text-align:center;
+  color:#efb13a;
+
+  font-size:25px;
+}
+
+.pages-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:11px;
+}
+
+.page-card{
+  min-height:105px;
+
+  padding:15px 10px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+  text-decoration:none;
+
+  color:#fff;
+
+  border:
+    1px solid rgba(91,145,211,.36);
+
+  border-radius:15px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(20,62,111,.88),
+      rgba(4,33,72,.94)
+    );
+
+  box-shadow:
+    0 7px 20px rgba(0,0,0,.15);
+
+  line-height:1.8;
+}
+
+.page-card:active{
+  transform:scale(.98);
+}
+
+.loading,
+.empty{
+  grid-column:1/-1;
+
+  padding:25px 10px;
+
+  text-align:center;
+
+  color:#dce7f5;
+
+  line-height:2;
+}
+
+.footer{
+  max-width:850px;
+
+  margin:25px auto 0;
+  padding:18px 10px;
+
+  text-align:center;
+
+  color:#cbd5e5;
+
+  border-top:
+    1px solid rgba(227,169,47,.20);
+
+  font-size:13px;
+  line-height:1.9;
+}
+
+.footer strong{
+  color:#eab03a;
+}
+
+@media(max-width:600px){
+
+  .pages-grid{
+    grid-template-columns:1fr;
+  }
+
+  .logo{
+    width:50px;
+    height:50px;
+    min-width:50px;
+  }
+
+  .brand-name{
+    font-size:18px;
+  }
+
+  .brand-sub{
+    font-size:9px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<header class="header">
+
+  <div class="brand">
+
+    <img
+      class="logo"
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtiQV1W9mQro6EmrwV6aJM5Rtve5MGvQsXCHuP5XlDi-6QSE5eo6INg28uODihhNdpMpOjke5vEkn2NPf6AuRzBAZSQvQxcYk_jgK0f7zpMBrKzCe-Bn-h5Dsjrwpua0xIPqDchRn8RAAJgMLroEFLbASS_WRgiR0NhF0TvPHMpFL9UGIGZeyltyZa3krn/s320/41040.png"
+      alt="Imdade Rohani"
+      draggable="false"
+    >
+
+    <div class="brand-text">
+
+      <span class="brand-name">
+        Imdade Rohani
+      </span>
+
+      <span class="brand-sub">
+        Rohani Ilaj aur Online Rehnumai
+      </span>
+
+    </div>
+
+  </div>
+
+  <a
+    class="home-btn"
+    href="/"
+  >
+    🏠 ہوم
+  </a>
+
+</header>
+
+
+<main class="hero">
+
+  <div class="hero-icon">
+    ✦
+  </div>
+
+  <h1>
+    روحانی رہنمائی
+  </h1>
+
+  <div class="intro">
+    یہاں Imdade Rohani کے دستیاب رہنمائی کے صفحات
+    ایک ہی جگہ پیش کیے گئے ہیں۔
+  </div>
+
+</main>
+
+
+<section class="directory">
+
+  <h2 class="directory-title">
+    دستیاب رہنمائی
+  </h2>
+
+  <div
+    class="pages-grid"
+    id="pagesGrid"
+  >
+
+    <div class="loading">
+      صفحات لوڈ ہو رہے ہیں…
+    </div>
+
+  </div>
+
+</section>
+
+
+<footer class="footer">
+
+  © 2026
+  <strong>
+    Imdade Rohani
+  </strong>
+
+  <br>
+
+  Rohani Ilaj aur Online Rehnumai
+
+</footer>
+
+</div>
+
+
+<script>
+
+document.addEventListener(
+  "contextmenu",
+  function(e){
+    e.preventDefault();
+  }
+);
+
+document.addEventListener(
+  "copy",
+  function(e){
+    e.preventDefault();
+  }
+);
+
+document.addEventListener(
+  "dragstart",
+  function(e){
+    e.preventDefault();
+  }
+);
+
+
+function titleFromUrl(url){
+
+  try{
+
+    const u =
+      new URL(url);
+
+    let slug =
+      u.pathname
+        .split("/")
+        .filter(Boolean)
+        .pop() || "";
+
+    slug =
+      slug
+        .replace(/\\.html?$/i,"")
+        .replace(/[-_]+/g," ")
+        .trim();
+
+    if(!slug){
+      return "رہنمائی";
+    }
+
+    return slug;
+
+  }catch(e){
+
+    return "رہنمائی";
+  }
+}
+
+
+async function getRealTitle(url){
+
+  try{
+
+    const response =
+      await fetch(
+        url,
+        {
+          credentials:"same-origin"
+        }
+      );
+
+    if(!response.ok){
+      return null;
+    }
+
+    const html =
+      await response.text();
+
+    const doc =
+      new DOMParser()
+        .parseFromString(
+          html,
+          "text/html"
+        );
+
+    const title =
+      (
+        doc.querySelector("h1")?.textContent ||
+        doc.querySelector("title")?.textContent ||
+        ""
+      )
+      .replace(/\\s+/g," ")
+      .replace(/\\s*[|–-]\\s*Imdade Rohani.*$/i,"")
+      .trim();
+
+    return title || null;
+
+  }catch(e){
+
+    return null;
+  }
+}
+
+
+async function loadPages(){
+
+  const grid =
+    document.getElementById(
+      "pagesGrid"
+    );
+
+  try{
+
+    const response =
+      await fetch(
+        "/sitemap-pages.xml",
+        {
+          cache:"no-store"
+        }
+      );
+
+    if(!response.ok){
+      throw new Error(
+        "SITEMAP_ERROR"
+      );
+    }
+
+    const xmlText =
+      await response.text();
+
+    const xml =
+      new DOMParser()
+        .parseFromString(
+          xmlText,
+          "application/xml"
+        );
+
+    const urls =
+      Array.from(
+        xml.querySelectorAll(
+          "url > loc"
+        )
+      )
+      .map(
+        item =>
+          item.textContent.trim()
+      )
+      .filter(Boolean);
+
+    if(!urls.length){
+
+      grid.innerHTML =
+        '<div class="empty">فی الحال کوئی رہنمائی کا صفحہ دستیاب نہیں ہے۔</div>';
+
+      return;
+    }
+
+    grid.innerHTML = "";
+
+    for(const url of urls){
+
+      const card =
+        document.createElement(
+          "a"
+        );
+
+      card.className =
+        "page-card";
+
+      card.href =
+        url;
+
+      card.textContent =
+        titleFromUrl(url);
+
+      grid.appendChild(
+        card
+      );
+
+      const realTitle =
+        await getRealTitle(url);
+
+      if(realTitle){
+        card.textContent =
+          realTitle;
+      }
+    }
+
+  }catch(error){
+
+    grid.innerHTML =
+      '<div class="empty">رہنمائی کے صفحات اس وقت لوڈ نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔</div>';
+  }
+}
+
+loadPages();
+
+</script>
+
+</body>
+</html>`;
+}
+
 async function checkBloggerResponse(response, request) {
 
   const CUSTOM_404 =
