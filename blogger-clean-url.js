@@ -1344,7 +1344,7 @@ export default {
         "/p/blog-page_14.html",
 
       "/qawaneen":
-        "/p/blog-page_52.html"
+        "/p/blog-page_52.html",
 
       "/quran-shreef":
         "/p/quran-shreef.html?m=1"
