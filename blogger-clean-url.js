@@ -1,3 +1,17 @@
+function serveCustom404() {
+  return new Response(
+    custom404Html(),
+    {
+      status: 404,
+      headers: {
+        "Content-Type": "text/html; charset=UTF-8",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "X-Content-Type-Options": "nosniff"
+      }
+    }
+  );
+}
+
 async function checkBloggerResponse(response, request) {
 
   const CUSTOM_404 =
