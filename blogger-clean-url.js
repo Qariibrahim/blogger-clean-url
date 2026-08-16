@@ -2062,6 +2062,24 @@ async function refreshRohaniPages(){
             return;
           }
 
+const originalPath =
+  pageUrl.pathname
+    .replace(
+      /\/+$/,
+      ""
+    );
+
+const pageKey =
+  originalPath
+    .replace(
+      /^\/p\//,
+      ""
+    )
+    .replace(
+      /\.html?$/i,
+      ""
+    );
+
           const cleanPath =
             cleanNameMap[pageKey]
               ? "/" +
