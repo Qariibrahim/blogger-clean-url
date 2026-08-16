@@ -1347,7 +1347,7 @@ export default {
         "/p/blog-page_52.html",
 
       "/quran-shreef":
-        "/p/quran-shreef.html?m=1"
+        "/p/quran-shreef.html"
     };
 
 
@@ -1362,6 +1362,10 @@ export default {
 
       bloggerURL.pathname =
         customPages[path];
+
+      if (path === "/quran-shreef") {
+  bloggerURL.search = "?m=1";
+}
 
       const bloggerRequest =
         new Request(
