@@ -95,16 +95,13 @@ export default {
       return fetch(request);
     }
 
-
     /* =========================================
-       CLEAN BLOGGER PAGE URL
-       Example:
-       /blog-page_51
-       becomes
-       /p/blog-page_51.html
+       FINAL SAFE CLEAN URL SYSTEM
        ========================================= */
 
-    if (/^\/[^\/.]+$/.test(path)) {
+    // Sirf Blogger ke asli blog-page_N type URLs ko
+    // /p/blog-page_N.html mein convert karein.
+    if (/^\/blog-page_\d+$/.test(path)) {
 
       const bloggerURL =
         new URL(request.url);
@@ -112,60 +109,28 @@ export default {
       bloggerURL.pathname =
         "/p" + path + ".html";
 
-      const bloggerRequest =
+      return fetch(
         new Request(
           bloggerURL.toString(),
           request
-        );
-
-      const response =
-  await fetch(bloggerRequest);
-
-const pageText =
-  await response.clone().text();
-
-const cleanPageText =
-  pageText
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<[^>]*>/g, " ")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&#160;/gi, " ")
-    .replace(/&amp;/gi, "&")
-    .replace(/\s+/g, " ")
-    .trim()
-    .toLowerCase();
-
-const hindiNotFound =
-  cleanPageText.includes("क्षमा करें") &&
-  cleanPageText.includes("इस ब्लॉग") &&
-  cleanPageText.includes("मौजूद नहीं है");
-
-const hindiNotFoundShort =
-  cleanPageText.includes("जिस पेज को आप खोज रहे हैं") &&
-  cleanPageText.includes("मौजूद नहीं है");
-
-const englishNotFound =
-  cleanPageText.includes("page you were looking for") &&
-  cleanPageText.includes("does not exist");
-
-const bloggerNotFound =
-  response.status === 404 ||
-  hindiNotFound ||
-  hindiNotFoundShort ||
-  englishNotFound;
-
-if (bloggerNotFound) {
-  return Response.redirect(
-    "https://qrc.imdaderohani.in/404",
-    302
-  );
-}
-
-return response;
+        )
+      );
     }
 
+    /* =========================================
+       UNKNOWN SIMPLE URL = CUSTOM 404
+       ========================================= */
 
+    // Agar URL ek simple clean slug hai,
+    // aur woh customPages mein bhi nahi tha,
+    // to use Blogger ke error page par na bhejein.
+    if (/^\/[^\/.]+$/.test(path)) {
+      return Response.redirect(
+        "https://qrc.imdaderohani.in/404",
+        302
+      );
+    }
+    
     /* =========================================
        NORMAL REQUEST
        ========================================= */
