@@ -1347,7 +1347,7 @@ export default {
         "/p/blog-page_52.html",
 
       "/quran-shreef":
-        "/p/quran-shreef.html"
+  "/p/quran-shreef.html"
     };
 
 
