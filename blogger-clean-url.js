@@ -718,6 +718,17 @@ button{
     );
 }
 
+.guidance-icon{
+  background:
+    linear-gradient(
+      #dca52f,
+      #8f5a08
+    );
+
+  box-shadow:
+    0 5px 16px
+    rgba(220,165,47,.28);
+}
 
 .card-title{
   font-size:19px;
@@ -1139,6 +1150,25 @@ button{
 
     </a>
 
+    <a
+      class="action-card"
+      href="/rohani-rehnumai"
+    >
+
+      <div class="big-icon guidance-icon">
+        ✦
+      </div>
+
+      <div class="card-title">
+        روحانی رہنمائی
+      </div>
+
+      <div class="card-sub">
+        تمام رہنمائی کے صفحات دیکھیں
+      </div>
+
+    </a>
+    
   </div>
 
 </section>
