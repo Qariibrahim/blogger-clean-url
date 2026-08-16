@@ -1976,23 +1976,6 @@ export default {
 
     const url = new URL(request.url);
     const path = url.pathname;
-
-    /* =========================================
-   ROHANI REHNUMAI DIRECTORY
-   ========================================= */
-
-if (path === "/rohani-rehnumai") {
-  return new Response(
-    rohaniRehnumaiHtml(),
-    {
-      status: 200,
-      headers: {
-        "Content-Type": "text/html; charset=UTF-8",
-        "Cache-Control": "no-store"
-      }
-    }
-  );
-}
     
         /* =========================================
        BLOCK INVALID BLOGGER .htm URLS
@@ -2004,44 +1987,6 @@ if (path === "/rohani-rehnumai") {
     ) {
       return serveCustom404();
     }
-
-    /* =========================================
-       IMDADE ROHANI CUSTOM CLEAN PAGE URLS
-       ========================================= */
-
-    const customPages = {
-
-      "/name-janch":
-        "/p/blog-page_51.html",
-
-      "/naqsh-download":
-        "/p/blog-page_13.html",
-
-      "/form-kaarguzari":
-        "/p/blog-page_22.html",
-
-      "/form-2":
-        "/p/page-one.html",
-
-      "/tashkheese-dawa":
-        "/p/fawaidtashkheesedawa.html",
-
-      "/janch-rupay":
-        "/p/blog-page_8.html",
-
-      "/ittilaat":
-        "/p/blog-page_1.html",
-
-      "/contact":
-        "/p/blog-page_14.html",
-
-      "/qawaneen":
-        "/p/blog-page_52.html",
-
-      "/quran-shreef":
-  "/p/quran-shreef.html"
-    };
-
 
     /* =========================================
        CUSTOM NAMED PAGES
