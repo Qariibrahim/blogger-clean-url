@@ -1761,53 +1761,130 @@ async function getRealTitle(url){
   }
 }
 
-
 async function loadPages(){
 
   const grid =
-    document.getElementById(
-      "pagesGrid"
-    );
+    document.getElementById("pagesGrid");
 
   try{
 
+    /* Blogger ka fresh Home Page load karein */
     const response =
       await fetch(
-        "/sitemap-pages.xml",
+        "/?rohaniPageList=" + Date.now(),
         {
           cache:"no-store"
         }
       );
 
     if(!response.ok){
-      throw new Error(
-        "SITEMAP_ERROR"
-      );
+      throw new Error("BLOGGER_HOME_ERROR");
     }
 
-    const xmlText =
+    const html =
       await response.text();
 
-    const xml =
+    const doc =
       new DOMParser()
         .parseFromString(
-          xmlText,
-          "application/xml"
+          html,
+          "text/html"
         );
 
-    const urls =
+    /*
+      Sirf Blogger ke PageList2 mein
+      jo pages shamil hain wahi lena hai.
+    */
+    const links =
       Array.from(
-        xml.querySelectorAll(
-          "url > loc"
+        doc.querySelectorAll(
+          "#PageList2 li > a[href]"
         )
-      )
-      .map(
-        item =>
-          item.textContent.trim()
-      )
-      .filter(Boolean);
+      );
 
-    if(!urls.length){
+    /*
+      Blogger menu mein maujood icons.
+      Position bilkul menu ke mutabiq rahegi.
+    */
+    const menuIcons = [
+      "⌂",
+      "▣",
+      "☾",
+      "⇩",
+      "⌕",
+      "✦",
+      "✚",
+      "₹",
+      "✉",
+      "☎",
+      "⚖"
+    ];
+
+    const pages = [];
+    const seen = new Set();
+
+    links.forEach(
+      function(link,index){
+
+        try{
+
+          const pageUrl =
+            new URL(
+              link.href,
+              window.location.origin
+            );
+
+          /*
+            Sirf isi website ke Blogger Pages.
+            Home ya external link nahi.
+          */
+          if(
+            pageUrl.hostname !==
+              window.location.hostname
+          ){
+            return;
+          }
+
+          if(
+            !pageUrl.pathname.startsWith("/p/")
+          ){
+            return;
+          }
+
+          const cleanUrl =
+            pageUrl.origin +
+            pageUrl.pathname;
+
+          if(seen.has(cleanUrl)){
+            return;
+          }
+
+          seen.add(cleanUrl);
+
+          const title =
+            (
+              link.textContent || ""
+            )
+            .replace(/\s+/g," ")
+            .trim();
+
+          if(!title){
+            return;
+          }
+
+          pages.push({
+            url:cleanUrl,
+            title:title,
+            icon:
+              menuIcons[index] || "✦"
+          });
+
+        }catch(e){}
+
+      }
+    );
+
+    if(!pages.length){
 
       grid.innerHTML =
         '<div class="empty">فی الحال کوئی رہنمائی کا صفحہ دستیاب نہیں ہے۔</div>';
@@ -1817,39 +1894,58 @@ async function loadPages(){
 
     grid.innerHTML = "";
 
-    for(const url of urls){
+    pages.forEach(
+      function(page){
 
-      const card =
-        document.createElement(
-          "a"
-        );
+        const card =
+          document.createElement("a");
 
-      card.className =
-        "page-card";
+        card.className =
+          "page-card";
 
-      card.href =
-        url;
+        card.href =
+          page.url;
 
-      card.textContent =
-        titleFromUrl(url);
+        card.style.flexDirection =
+          "column";
 
-      grid.appendChild(
-        card
-      );
+        card.style.gap =
+          "10px";
 
-      const realTitle =
-        await getRealTitle(url);
+        const icon =
+          document.createElement("span");
 
-      if(realTitle){
-        card.textContent =
-          realTitle;
+        icon.textContent =
+          page.icon;
+
+        icon.style.fontSize =
+          "30px";
+
+        icon.style.color =
+          "#efb13a";
+
+        icon.style.lineHeight =
+          "1";
+
+        const title =
+          document.createElement("span");
+
+        title.textContent =
+          page.title;
+
+        card.appendChild(icon);
+        card.appendChild(title);
+
+        grid.appendChild(card);
+
       }
-    }
+    );
 
   }catch(error){
 
     grid.innerHTML =
       '<div class="empty">رہنمائی کے صفحات اس وقت لوڈ نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔</div>';
+
   }
 }
 
