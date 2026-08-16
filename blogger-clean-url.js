@@ -2064,12 +2064,10 @@ async function refreshRohaniPages(){
           }
 
 
-          const originalPath =
-            pageUrl.pathname
-              .replace(
-                /\/+$/,
-                ""
-              );
+          .replace(
+  /\\/+$/,
+  ""
+);
 
 
           const pageKey =
@@ -2079,9 +2077,9 @@ async function refreshRohaniPages(){
                 ""
               )
               .replace(
-                /^\//,
-                ""
-              )
+  /^\\/p\\//,
+  ""
+)
               .replace(
                 /\.html?$/i,
                 ""
