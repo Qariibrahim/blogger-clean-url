@@ -124,13 +124,25 @@ export default {
 const pageText =
   await response.clone().text();
 
+const cleanPageText =
+  pageText
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+
 const bloggerNotFound =
   response.status === 404 ||
-  pageText.includes(
+  cleanPageText.includes(
     "जिस पेज को आप खोज रहे हैं वह मौजूद नहीं है"
   ) ||
-  pageText.includes(
+  cleanPageText.includes(
+    "इस ब्लॉग में जिस पेज को आप खोज रहे हैं वह मौजूद नहीं है"
+  ) ||
+  cleanPageText.includes(
     "the page you were looking for in this blog does not exist"
+  ) ||
+  cleanPageText.includes(
+    "sorry, the page you were looking for in this blog does not exist"
   );
 
 if (bloggerNotFound) {
