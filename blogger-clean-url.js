@@ -1,14 +1,13 @@
 async function checkBloggerResponse(response, request) {
 
-  // Asli HTTP 404
-  if (response.status === 404) {
-    return Response.redirect(
-      "https://qrc.imdaderohani.in/404",
-      302
-    );
+  const CUSTOM_404 =
+    "https://qrc.imdaderohani.in/404";
+
+  // Asli HTTP error
+  if (response.status === 404 || response.status === 410) {
+    return Response.redirect(CUSTOM_404, 302);
   }
 
-  // HEAD request ya non-HTML response ko text check na karein
   if (request.method === "HEAD") {
     return response;
   }
@@ -16,6 +15,7 @@ async function checkBloggerResponse(response, request) {
   const contentType =
     response.headers.get("content-type") || "";
 
+  // Sirf HTML pages inspect karne hain
   if (!contentType.toLowerCase().includes("text/html")) {
     return response;
   }
@@ -23,44 +23,89 @@ async function checkBloggerResponse(response, request) {
   const html =
     await response.clone().text();
 
+  // HTML entities ko actual characters mein badlein
+  const decodeEntities = (str) => {
+    return str
+      .replace(/&#(\d+);/g, (_, n) => {
+        try {
+          return String.fromCodePoint(parseInt(n, 10));
+        } catch {
+          return _;
+        }
+      })
+      .replace(/&#x([0-9a-f]+);/gi, (_, n) => {
+        try {
+          return String.fromCodePoint(parseInt(n, 16));
+        } catch {
+          return _;
+        }
+      })
+      .replace(/&nbsp;/gi, " ")
+      .replace(/&amp;/gi, "&")
+      .replace(/&quot;/gi, '"')
+      .replace(/&#39;/gi, "'")
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">");
+  };
+
+  const decodedHtml =
+    decodeEntities(html);
+
   const text =
-    html
+    decodedHtml
       .replace(/<script[\s\S]*?<\/script>/gi, " ")
       .replace(/<style[\s\S]*?<\/style>/gi, " ")
       .replace(/<[^>]*>/g, " ")
-      .replace(/&nbsp;/gi, " ")
-      .replace(/&#160;/gi, " ")
-      .replace(/&amp;/gi, "&")
       .replace(/\s+/g, " ")
       .trim()
       .toLowerCase();
 
-  // Blogger Hindi soft-404
+  // Hindi Blogger error
   const hindi404 =
     (
       text.includes("क्षमा करें") ||
-      text.includes("जिस पेज को आप खोज रहे हैं")
+      text.includes("जिस पेज को आप खोज रहे हैं") ||
+      text.includes("जिस पृष्ठ को आप खोज रहे हैं")
     ) &&
-    text.includes("मौजूद नहीं है");
+    (
+      text.includes("मौजूद नहीं है") ||
+      text.includes("उपलब्ध नहीं है")
+    );
 
-  // Blogger English soft-404
+  // English Blogger error
   const english404 =
     (
       text.includes("page you were looking for") ||
-      text.includes("page you are looking for")
+      text.includes("page you are looking for") ||
+      text.includes("page you're looking for")
     ) &&
-    text.includes("does not exist");
-
-  if (hindi404 || english404) {
-    return Response.redirect(
-      "https://qrc.imdaderohani.in/404",
-      302
+    (
+      text.includes("does not exist") ||
+      text.includes("not found") ||
+      text.includes("doesn't exist")
     );
+
+  // Blogger ke error/status page ke structural markers
+  const bloggerErrorStructure =
+    (
+      /status-msg-body/i.test(decodedHtml) ||
+      /status-msg-wrap/i.test(decodedHtml)
+    ) &&
+    (
+      hindi404 ||
+      english404
+    );
+
+  if (
+    hindi404 ||
+    english404 ||
+    bloggerErrorStructure
+  ) {
+    return Response.redirect(CUSTOM_404, 302);
   }
 
   return response;
 }
-
 
 export default {
 
