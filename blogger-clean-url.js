@@ -126,27 +126,34 @@ const pageText =
 
 const cleanPageText =
   pageText
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&#160;/gi, " ")
+    .replace(/&amp;/gi, "&")
     .replace(/\s+/g, " ")
+    .trim()
     .toLowerCase();
+
+const hindiNotFound =
+  cleanPageText.includes("क्षमा करें") &&
+  cleanPageText.includes("इस ब्लॉग") &&
+  cleanPageText.includes("मौजूद नहीं है");
+
+const hindiNotFoundShort =
+  cleanPageText.includes("जिस पेज को आप खोज रहे हैं") &&
+  cleanPageText.includes("मौजूद नहीं है");
+
+const englishNotFound =
+  cleanPageText.includes("page you were looking for") &&
+  cleanPageText.includes("does not exist");
 
 const bloggerNotFound =
   response.status === 404 ||
-  cleanPageText.includes(
-    "क्षमा करें, इस ब्लॉग में जिस पेज को आप खोज रहे हैं वह मौजूद नहीं है"
-  ) ||
-  cleanPageText.includes(
-    "जिस पेज को आप खोज रहे हैं वह मौजूद नहीं है"
-  ) ||
-  cleanPageText.includes(
-    "इस ब्लॉग में जिस पेज को आप खोज रहे हैं वह मौजूद नहीं है"
-  ) ||
-  cleanPageText.includes(
-    "the page you were looking for in this blog does not exist"
-  ) ||
-  cleanPageText.includes(
-    "sorry, the page you were looking for in this blog does not exist"
-  );
+  hindiNotFound ||
+  hindiNotFoundShort ||
+  englishNotFound;
 
 if (bloggerNotFound) {
   return Response.redirect(
