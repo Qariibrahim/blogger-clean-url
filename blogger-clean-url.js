@@ -1761,28 +1761,198 @@ async function getRealTitle(url){
   }
 }
 
-async function loadPages(){
+/* =========================================
+   FAST ROHANI REHNUMAI PAGE LOADER
+   ========================================= */
+
+const FAST_DEFAULT_PAGES = [
+
+  {
+    url:"/form-kaarguzari",
+    title:"फार्म कारगुज़ारी",
+    icon:"▣"
+  },
+
+  {
+    url:"/quran-shreef",
+    title:"क़ुरआन शरीफ़",
+    icon:"☾"
+  },
+
+  {
+    url:"/naqsh-download",
+    title:"नक़्श डाउनलोड",
+    icon:"⇩"
+  },
+
+  {
+    url:"/name-janch",
+    title:"नाम जांच / ऑनलाइन",
+    icon:"⌕"
+  },
+
+  {
+    url:"/form-2",
+    title:"फार्म 2 / बज़रीए ख़ादिम नाम जांच",
+    icon:"✦"
+  },
+
+  {
+    url:"/tashkheese-dawa",
+    title:"फवायद / तशख़ीस ए दवा",
+    icon:"✚"
+  },
+
+  {
+    url:"/janch-rupay",
+    title:"जांच (रुपये कहां से आएगा) ऑनलाइन",
+    icon:"₹"
+  },
+
+  {
+    url:"/ittilaat",
+    title:"इत्तिला दौरान ए अमल",
+    icon:"✉"
+  },
+
+  {
+    url:"/contact",
+    title:"कॉन्टेक्ट्स",
+    icon:"☎"
+  },
+
+  {
+    url:"/qawaneen",
+    title:"क़वानीन",
+    icon:"⚖"
+  }
+
+];
+
+
+function renderRohaniPages(pages){
 
   const grid =
     document.getElementById("pagesGrid");
 
+  if(!grid){
+    return;
+  }
+
+  grid.innerHTML = "";
+
+  pages.forEach(function(page){
+
+    const card =
+      document.createElement("a");
+
+    card.className =
+      "page-card";
+
+    card.href =
+      page.url;
+
+    card.style.flexDirection =
+      "column";
+
+    card.style.gap =
+      "10px";
+
+
+    const icon =
+      document.createElement("span");
+
+    icon.textContent =
+      page.icon || "✦";
+
+    icon.style.fontSize =
+      "30px";
+
+    icon.style.color =
+      "#efb13a";
+
+    icon.style.lineHeight =
+      "1";
+
+
+    const title =
+      document.createElement("span");
+
+    title.textContent =
+      page.title;
+
+
+    card.appendChild(icon);
+
+    card.appendChild(title);
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================================
+   1. PAGE KO FORAN DIKHAO
+   ========================================= */
+
+let savedPages = null;
+
+try{
+
+  savedPages =
+    JSON.parse(
+      localStorage.getItem(
+        "rohaniRehnumaiPages"
+      )
+    );
+
+}catch(e){}
+
+
+if(
+  Array.isArray(savedPages) &&
+  savedPages.length
+){
+
+  renderRohaniPages(
+    savedPages
+  );
+
+}else{
+
+  renderRohaniPages(
+    FAST_DEFAULT_PAGES
+  );
+
+}
+
+
+/* =========================================
+   2. BLOGGER PAGELIST BACKGROUND MEIN CHECK
+   ========================================= */
+
+async function refreshRohaniPages(){
+
   try{
 
-    /* Blogger ka fresh Home Page load karein */
     const response =
       await fetch(
-        "/?rohaniPageList=" + Date.now(),
+        "/?rohaniPageList=1",
         {
-          cache:"no-store"
+          cache:"no-cache"
         }
       );
 
     if(!response.ok){
-      throw new Error("BLOGGER_HOME_ERROR");
+      return;
     }
+
 
     const html =
       await response.text();
+
 
     const doc =
       new DOMParser()
@@ -1791,10 +1961,7 @@ async function loadPages(){
           "text/html"
         );
 
-    /*
-      Sirf Blogger ke PageList2 mein
-      jo pages shamil hain wahi lena hai.
-    */
+
     const links =
       Array.from(
         doc.querySelectorAll(
@@ -1802,10 +1969,12 @@ async function loadPages(){
         )
       );
 
-    /*
-      Blogger menu mein maujood icons.
-      Position bilkul menu ke mutabiq rahegi.
-    */
+
+    if(!links.length){
+      return;
+    }
+
+
     const menuIcons = [
       "⌂",
       "▣",
@@ -1820,8 +1989,47 @@ async function loadPages(){
       "⚖"
     ];
 
+
+    const cleanNameMap = {
+
+      "blog-page_51":
+        "name-janch",
+
+      "blog-page_13":
+        "naqsh-download",
+
+      "blog-page_22":
+        "form-kaarguzari",
+
+      "page-one":
+        "form-2",
+
+      "fawaidtashkheesedawa":
+        "tashkheese-dawa",
+
+      "blog-page_8":
+        "janch-rupay",
+
+      "blog-page_1":
+        "ittilaat",
+
+      "blog-page_14":
+        "contact",
+
+      "blog-page_52":
+        "qawaneen",
+
+      "quran-shreef":
+        "quran-shreef"
+
+    };
+
+
     const pages = [];
-    const seen = new Set();
+
+    const seen =
+      new Set();
+
 
     links.forEach(
       function(link,index){
@@ -1834,149 +2042,159 @@ async function loadPages(){
               window.location.origin
             );
 
-          /*
-            Sirf isi website ke Blogger Pages.
-            Home ya external link nahi.
-          */
+
           if(
             pageUrl.hostname !==
-              window.location.hostname
+            window.location.hostname
           ){
             return;
           }
+
+
+          /*
+            Home ko Rohani Rehnumai
+            mein mat dikhana
+          */
 
           if(
-            !pageUrl.pathname.startsWith("/p/")
+            !pageUrl.pathname
+              .startsWith("/p/")
           ){
             return;
           }
 
+
           const originalPath =
-  pageUrl.pathname
-    .replace(/\/+$/,"");
+            pageUrl.pathname
+              .replace(
+                /\/+$/,
+                ""
+              );
 
-const pageKey =
-  originalPath
-    .replace(/^\/p\//,"")
-    .replace(/^\//,"")
-    .replace(/\.html?$/i,"");
 
-const cleanNameMap = {
-  "blog-page_51": "name-janch",
-  "blog-page_13": "naqsh-download",
-  "blog-page_22": "form-kaarguzari",
-  "page-one": "form-2",
-  "fawaidtashkheesedawa": "tashkheese-dawa",
-  "blog-page_8": "janch-rupay",
-  "blog-page_1": "ittilaat",
-  "blog-page_14": "contact",
-  "blog-page_52": "qawaneen",
-  "quran-shreef": "quran-shreef"
-};
+          const pageKey =
+            originalPath
+              .replace(
+                /^\/p\//,
+                ""
+              )
+              .replace(
+                /^\//,
+                ""
+              )
+              .replace(
+                /\.html?$/i,
+                ""
+              );
 
-const cleanUrl =
-  pageUrl.origin +
-  (
-    cleanNameMap[pageKey]
-      ? "/" + cleanNameMap[pageKey]
-      : originalPath
-  );
 
-          if(seen.has(cleanUrl)){
+          const cleanPath =
+            cleanNameMap[pageKey]
+              ? "/" +
+                cleanNameMap[pageKey]
+              : originalPath;
+
+
+          if(
+            seen.has(cleanPath)
+          ){
             return;
           }
 
-          seen.add(cleanUrl);
 
           const title =
             (
-              link.textContent || ""
+              link.textContent ||
+              ""
             )
-            .replace(/\s+/g," ")
+            .replace(
+              /\s+/g,
+              " "
+            )
             .trim();
+
 
           if(!title){
             return;
           }
 
+
+          seen.add(cleanPath);
+
+
           pages.push({
-            url:cleanUrl,
-            title:title,
+
+            url:
+              cleanPath,
+
+            title:
+              title,
+
             icon:
-              menuIcons[index] || "✦"
+              menuIcons[index] ||
+              "✦"
+
           });
+
 
         }catch(e){}
 
       }
     );
 
+
     if(!pages.length){
-
-      grid.innerHTML =
-        '<div class="empty">فی الحال کوئی رہنمائی کا صفحہ دستیاب نہیں ہے۔</div>';
-
       return;
     }
 
-    grid.innerHTML = "";
 
-    pages.forEach(
-      function(page){
+    /*
+      Fresh Blogger list ko
+      mobile mein save kar do
+    */
 
-        const card =
-          document.createElement("a");
+    try{
 
-        card.className =
-          "page-card";
+      localStorage.setItem(
+        "rohaniRehnumaiPages",
+        JSON.stringify(pages)
+      );
 
-        card.href =
-          page.url;
+    }catch(e){}
 
-        card.style.flexDirection =
-          "column";
 
-        card.style.gap =
-          "10px";
+    /*
+      Fresh list mil gayi to
+      screen ko update karo
+    */
 
-        const icon =
-          document.createElement("span");
-
-        icon.textContent =
-          page.icon;
-
-        icon.style.fontSize =
-          "30px";
-
-        icon.style.color =
-          "#efb13a";
-
-        icon.style.lineHeight =
-          "1";
-
-        const title =
-          document.createElement("span");
-
-        title.textContent =
-          page.title;
-
-        card.appendChild(icon);
-        card.appendChild(title);
-
-        grid.appendChild(card);
-
-      }
+    renderRohaniPages(
+      pages
     );
+
 
   }catch(error){
 
-    grid.innerHTML =
-      '<div class="empty">رہنمائی کے صفحات اس وقت لوڈ نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔</div>';
+    /*
+      Blogger slow/offline ho to bhi
+      pehle se dikhaye cards ko
+      bilkul mat hatao.
+    */
 
   }
+
 }
 
-loadPages();
+
+/*
+  Background check.
+  Iska intezar user nahi karega.
+*/
+
+setTimeout(
+  refreshRohaniPages,
+  100
+);
 
 </script>
 
