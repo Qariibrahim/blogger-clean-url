@@ -133,6 +133,9 @@ const cleanPageText =
 const bloggerNotFound =
   response.status === 404 ||
   cleanPageText.includes(
+    "क्षमा करें, इस ब्लॉग में जिस पेज को आप खोज रहे हैं वह मौजूद नहीं है"
+  ) ||
+  cleanPageText.includes(
     "जिस पेज को आप खोज रहे हैं वह मौजूद नहीं है"
   ) ||
   cleanPageText.includes(
