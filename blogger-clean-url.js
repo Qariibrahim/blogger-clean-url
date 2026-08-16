@@ -114,6 +114,19 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+        /* =========================================
+       BLOCK INVALID BLOGGER .htm URLS
+       ========================================= */
+
+    if (
+      path.startsWith("/p/") &&
+      path.toLowerCase().endsWith(".htm")
+    ) {
+      return Response.redirect(
+        "https://qrc.imdaderohani.in/404",
+        302
+      );
+    }
 
     /* =========================================
        IMDADE ROHANI CUSTOM CLEAN PAGE URLS
