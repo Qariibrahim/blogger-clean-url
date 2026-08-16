@@ -1851,24 +1851,35 @@ async function loadPages(){
             return;
           }
 
-          const cleanPathMap = {
-  "/p/blog-page_51.html": "/name-janch",
-  "/p/blog-page_13.html": "/naqsh-download",
-  "/p/blog-page_22.html": "/form-kaarguzari",
-  "/p/page-one.html": "/form-2",
-  "/p/fawaidtashkheesedawa.html": "/tashkheese-dawa",
-  "/p/blog-page_8.html": "/janch-rupay",
-  "/p/blog-page_1.html": "/ittilaat",
-  "/p/blog-page_14.html": "/contact",
-  "/p/blog-page_52.html": "/qawaneen",
-  "/p/quran-shreef.html": "/quran-shreef"
+          const originalPath =
+  pageUrl.pathname
+    .replace(/\/+$/,"");
+
+const pageKey =
+  originalPath
+    .replace(/^\/p\//,"")
+    .replace(/^\//,"")
+    .replace(/\.html?$/i,"");
+
+const cleanNameMap = {
+  "blog-page_51": "name-janch",
+  "blog-page_13": "naqsh-download",
+  "blog-page_22": "form-kaarguzari",
+  "page-one": "form-2",
+  "fawaidtashkheesedawa": "tashkheese-dawa",
+  "blog-page_8": "janch-rupay",
+  "blog-page_1": "ittilaat",
+  "blog-page_14": "contact",
+  "blog-page_52": "qawaneen",
+  "quran-shreef": "quran-shreef"
 };
 
 const cleanUrl =
   pageUrl.origin +
   (
-    cleanPathMap[pageUrl.pathname] ||
-    pageUrl.pathname
+    cleanNameMap[pageKey]
+      ? "/" + cleanNameMap[pageKey]
+      : originalPath
   );
 
           if(seen.has(cleanUrl)){
