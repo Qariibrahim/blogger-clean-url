@@ -1,20 +1,3 @@
-async function serveCustom404() {
-  const customPage = await fetch(
-    "https://qrc-pwa.qariibrahimishati.workers.dev/404"
-  );
-
-  const html = await customPage.text();
-
-  return new Response(html, {
-    status: 404,
-    headers: {
-      "Content-Type": "text/html; charset=UTF-8",
-      "Cache-Control": "no-store, no-cache, must-revalidate",
-      "X-Content-Type-Options": "nosniff"
-    }
-  });
-}
-
 async function checkBloggerResponse(response, request) {
 
   const CUSTOM_404 =
