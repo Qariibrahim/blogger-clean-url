@@ -2064,6 +2064,7 @@ async function refreshRohaniPages(){
           }
           
         const originalPath =
+  const originalPath =
   pageUrl.pathname
     .replace(
       /\\/+$/,
