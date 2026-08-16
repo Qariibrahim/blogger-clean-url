@@ -1328,7 +1328,7 @@ body{
   height:58px;
   min-width:58px;
 
-  padding:10px;
+  padding:24px;
   object-fit:contain;
 
   border-radius:50%;
