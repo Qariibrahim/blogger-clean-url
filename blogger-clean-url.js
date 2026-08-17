@@ -2313,6 +2313,93 @@ async function checkBloggerResponse(response, request) {
   return response;
 }
 
+async function keepCleanBrowserUrl(response, cleanPath) {
+
+  const contentType =
+    response.headers.get("content-type") || "";
+
+  if (
+    !contentType
+      .toLowerCase()
+      .includes("text/html")
+  ) {
+    return response;
+  }
+
+  const html =
+    await response.text();
+
+  const safePath =
+    JSON.stringify(cleanPath);
+
+  const cleanUrlScript = `
+<script>
+(function(){
+
+  var cleanPath = ${safePath};
+
+  function keepCleanUrl(){
+
+    if(
+      window.location.pathname !== cleanPath ||
+      window.location.search
+    ){
+      history.replaceState(
+        null,
+        "",
+        cleanPath
+      );
+    }
+
+  }
+
+  keepCleanUrl();
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    keepCleanUrl
+  );
+
+  window.addEventListener(
+    "pageshow",
+    keepCleanUrl
+  );
+
+  setTimeout(keepCleanUrl, 100);
+  setTimeout(keepCleanUrl, 500);
+  setTimeout(keepCleanUrl, 1500);
+
+})();
+</script>
+`;
+
+  const newHtml =
+    html.replace(
+      /<\/head>/i,
+      cleanUrlScript + "</head>"
+    );
+
+  const headers =
+    new Headers(response.headers);
+
+  headers.delete("content-length");
+  headers.delete("content-encoding");
+
+  headers.set(
+    "Cache-Control",
+    "no-store"
+  );
+
+  return new Response(
+    newHtml,
+    {
+      status: response.status,
+      statusText: response.statusText,
+      headers: headers
+    }
+  );
+}
+
 export default {
 
   async fetch(request) {
