@@ -2065,18 +2065,18 @@ async function refreshRohaniPages(){
 const originalPath =
   pageUrl.pathname
     .replace(
-      /\/+$/,
+      /\\/+$/,
       ""
     );
 
 const pageKey =
   originalPath
     .replace(
-      /^\/p\//,
+      /^\\/p\\//,
       ""
     )
     .replace(
-      /\.html?$/i,
+      /\\.html?$/i,
       ""
     );
 
@@ -2100,7 +2100,7 @@ const pageKey =
               ""
             )
             .replace(
-              /\s+/g,
+              /\\s+/g
               " "
             )
             .trim();
