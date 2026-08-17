@@ -2080,12 +2080,22 @@ const pageKey =
       ""
     );
 
-          const cleanPath =
-            cleanNameMap[pageKey]
-              ? "/" +
-                cleanNameMap[pageKey]
-              : originalPath;
+          const directCleanPathMap = {
+  "/p/blog-page_51.html": "/name-janch",
+  "/p/blog-page_13.html": "/naqsh-download",
+  "/p/blog-page_22.html": "/form-kaarguzari",
+  "/p/page-one.html": "/form-2",
+  "/p/fawaidtashkheesedawa.html": "/tashkheese-dawa",
+  "/p/blog-page_8.html": "/janch-rupay",
+  "/p/blog-page_1.html": "/ittilaat",
+  "/p/blog-page_14.html": "/contact",
+  "/p/blog-page_52.html": "/qawaneen",
+  "/p/quran-shreef.html": "/quran-shreef"
+};
 
+const cleanPath =
+  directCleanPathMap[originalPath] ||
+  originalPath;
 
           if(
             seen.has(cleanPath)
