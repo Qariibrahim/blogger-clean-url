@@ -2100,7 +2100,7 @@ const pageKey =
               ""
             )
             .replace(
-              /\\s+/g
+              /\\s+/g,
               " "
             )
             .trim();
