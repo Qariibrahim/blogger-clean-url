@@ -2484,9 +2484,7 @@ if (path === "/rohani-rehnumai") {
       bloggerURL.pathname =
         customPages[path];
 
-      if (path === "/quran-shreef") {
-  bloggerURL.search = "?m=1";
-}
+      bloggerURL.search = "?m=1";
 
       const bloggerRequest =
         new Request(
