@@ -1904,7 +1904,7 @@ try{
   savedPages =
     JSON.parse(
       localStorage.getItem(
-        "rohaniRehnumaiPages"
+        "rohaniRehnumaiPagesV2"
       )
     );
 
@@ -2148,7 +2148,7 @@ const pageKey =
     try{
 
       localStorage.setItem(
-        "rohaniRehnumaiPages",
+        "rohaniRehnumaiPagesV2",
         JSON.stringify(pages)
       );
 
