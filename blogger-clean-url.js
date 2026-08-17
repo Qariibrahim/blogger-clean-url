@@ -2495,12 +2495,18 @@ if (path === "/rohani-rehnumai") {
         );
 
       const response =
-        await fetch(bloggerRequest);
+  await fetch(bloggerRequest);
 
-      return checkBloggerResponse(
-        response,
-        request
-      );
+const checkedResponse =
+  await checkBloggerResponse(
+    response,
+    request
+  );
+
+return keepCleanBrowserUrl(
+  checkedResponse,
+  path
+);
     }
 
 
