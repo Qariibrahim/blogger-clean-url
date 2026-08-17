@@ -181,7 +181,7 @@ button{
 
   padding:0px;
 
-  object-fit:contain;
+  object-fit:cover;
 
   background:
     linear-gradient(
@@ -1329,7 +1329,7 @@ body{
   min-width:58px;
 
   padding:0px;
-  object-fit:contain;
+  object-fit:cover;
 
   border-radius:50%;
 
