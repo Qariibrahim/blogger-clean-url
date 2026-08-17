@@ -1331,7 +1331,7 @@ body{
 
   padding:0px;
   object-fit:cover;
-object-position:45% center;
+object-position:70% center;
 
   border-radius:50%;
 
