@@ -1173,6 +1173,24 @@ object-position:70% center;
       </div>
 
     </a>
+
+<a
+  class="action-card"
+  href="tel:+919356236900"
+  aria-label="Call Now"
+>
+  <div class="big-icon home-icon">
+    ☎
+  </div>
+
+  <div class="card-title">
+    فون پر بات کریں
+  </div>
+
+  <div class="card-sub">
+    ابھی کال کریں
+  </div>
+</a>
     
   </div>
 
