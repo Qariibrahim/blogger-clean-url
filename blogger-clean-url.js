@@ -179,7 +179,7 @@ button{
 
   border-radius:50%;
 
-  padding:7px;
+  padding:0px;
 
   object-fit:contain;
 
@@ -1328,7 +1328,7 @@ body{
   height:58px;
   min-width:58px;
 
-  padding:2px;
+  padding:0px;
   object-fit:contain;
 
   border-radius:50%;
