@@ -182,7 +182,7 @@ button{
   padding:0px;
 
   object-fit:cover;
-object-position:center center;
+object-position:45% center;
 
   background:
     linear-gradient(
@@ -1331,7 +1331,7 @@ body{
 
   padding:0px;
   object-fit:cover;
-object-position:center center;
+object-position:45% center;
 
   border-radius:50%;
 
