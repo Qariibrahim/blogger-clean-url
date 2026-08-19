@@ -2575,14 +2575,15 @@ return keepCleanBrowserUrl(
        ========================================= */
 
     const directPrefixes = [
-      "/api/",
-      "/manifest",
-      "/service-worker",
-      "/pwa-",
-      "/install",
-      "/404",
-      "/cdn-cgi/"
-    ];
+  "/api/",
+  "/manifest",
+  "/service-worker",
+  "/pwa-",
+  "/notification-bell",
+  "/install",
+  "/404",
+  "/cdn-cgi/"
+];
 
     if (
       directPrefixes.some(
